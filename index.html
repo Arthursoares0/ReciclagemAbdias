@@ -108,7 +108,7 @@
                 const totalDePontos = equipe.pontos.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0);
                 return {
                     nome: equipe.nome,
-                    total: totalDePontos
+                   total: Number(totalDePontos.toFixed(2))
                 };
             });
 
