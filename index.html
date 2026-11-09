@@ -86,7 +86,17 @@
             { nome: '1°RH', peso: 23.76, pontos: [9.2, 221.56] },
             { nome: '2°ST', peso: 0.2, pontos: [14.1] },
             { nome: '1°DS Tarde', peso: 3.76, pontos: [6.4, 12.2, 21] },
-            { nome: '2°ADM Manhã', peso: 1.46, pontos: [11.68] }
+            { nome: '2°ADM Manhã', peso: 1.46, pontos: [11.68] },
+
+            // Turmas que não contribuíram (zeradas)
+            { nome: '3° DS Manhã', peso: 0, pontos: [] },
+            { nome: '1° ADM Manhã', peso: 0, pontos: [] },
+            { nome: '3° ADM Manhã', peso: 0, pontos: [] },
+            { nome: '2° DS Tarde', peso: 0, pontos: [] },
+            { nome: '3° DS Tarde', peso: 0, pontos: [] },
+            { nome: '2° ADM Tarde', peso: 0, pontos: [] },
+            { nome: '3° ADM Tarde', peso: 0, pontos: [] },
+            { nome: '1° ADM Tarde', peso: 0, pontos: [] }
         ];
 
         const formatarKg = (n) => n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' kg';
