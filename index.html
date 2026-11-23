@@ -76,47 +76,47 @@
         // Limite mínimo de peso (kg). Turmas abaixo disso ficam em vermelho.
         const LIMITE_KG = 5;
 
-        // Dados: pontos e peso coletado (kg) de cada equipe
+        // Dados: pontos e peso coletado (kg) de cada equipe (ambos são listas somadas)
         const equipes = [
-            { nome: '1°ST', peso: 45.88, pontos: [54.5, 14, 10, 19.8, 26.3, 43.84, 133.52, 81.7, 15.4] },
-            { nome: 'Info', peso: 14.38, pontos: [23, 30, 4, 3.1, 17.8, 64] },
-            { nome: '2° DS Manhã', peso: 5.35, pontos: [36.7, 3.4, 3.4, 5.6] },
-            { nome: '1° DS Manhã', peso: 34.62, pontos: [22, 10, 27, 7, 38.8, 32, 39.9, 29.26, 2.5, 10.8] },
-            { nome: '2°RH', peso: 14.08, pontos: [15, 12, 7, 29, 11.3, 44.34] },
-            { nome: '1°RH', peso: 23.76, pontos: [9.2, 221.56] },
+            { nome: '1°ST', peso: [45.88], pontos: [54.5, 14, 10, 19.8, 26.3, 43.84, 133.52, 81.7, 15.4] },
+            { nome: 'Info', peso: [14.38], pontos: [23, 30, 4, 3.1, 17.8, 64] },
+            { nome: '2° DS Manhã', peso: [5.35], pontos: [36.7, 3.4, 3.4, 5.6] },
+            { nome: '1° DS Manhã', peso: [34.62], pontos: [22, 10, 27, 7, 38.8, 32, 39.9, 29.26, 2.5, 10.8] },
+            { nome: '2°RH', peso: [14.08], pontos: [15, 12, 7, 29, 11.3, 44.34] },
+            { nome: '1°RH', peso: [23.76], pontos: [9.2, 221.56] },
             { nome: '2°ST', peso: [0.2, 3.8], pontos: [14.1, 38] },
-            { nome: '1°DS Tarde', peso: 3.76, pontos: [6.4, 12.2, 21] },
-            { nome: '2°ADM Manhã', peso: 1.46, pontos: [11.68] },
+            { nome: '1°DS Tarde', peso: [3.76], pontos: [6.4, 12.2, 21] },
+            { nome: '2°ADM Manhã', peso: [1.46], pontos: [11.68] },
 
             // Turmas que não contribuíram (zeradas)
-            { nome: '3° DS Manhã', peso: 0, pontos: [] },
-            { nome: '1° ADM Manhã', peso: 0, pontos: [] },
-            { nome: '3° ADM Manhã', peso: 0, pontos: [] },
-            { nome: '2° DS Tarde', peso: 0, pontos: [] },
-            { nome: '3° DS Tarde', peso: 0, pontos: [] },
-            { nome: '2° ADM Tarde', peso: 0, pontos: [] },
-            { nome: '3° ADM Tarde', peso: 0, pontos: [] },
-            { nome: '1° ADM Tarde', peso: 0, pontos: [] }
+            { nome: '3° DS Manhã', peso: [], pontos: [] },
+            { nome: '1° ADM Manhã', peso: [], pontos: [] },
+            { nome: '3° ADM Manhã', peso: [], pontos: [] },
+            { nome: '2° DS Tarde', peso: [], pontos: [] },
+            { nome: '3° DS Tarde', peso: [], pontos: [] },
+            { nome: '2° ADM Tarde', peso: [], pontos: [] },
+            { nome: '3° ADM Tarde', peso: [], pontos: [] },
+            { nome: '1° ADM Tarde', peso: [], pontos: [] }
         ];
 
         const formatarKg = (n) => n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' kg';
         const abaixoDoLimite = (peso) => peso < LIMITE_KG;
 
+        // Soma os valores de uma lista (usada para pontos e para peso)
+        const somarLista = (lista) => Number(lista.reduce((acc, v) => acc + v, 0).toFixed(2));
+
         function prepararRanking(dados) {
-            const classificacao = dados.map(equipe => {
-                const totalDePontos = equipe.pontos.reduce((acc, v) => acc + v, 0);
-                return {
-                    nome: equipe.nome,
-                    peso: equipe.peso,
-                    total: Number(totalDePontos.toFixed(2))
-                };
-            });
+            const classificacao = dados.map(equipe => ({
+                nome: equipe.nome,
+                peso: somarLista(equipe.peso),
+                total: somarLista(equipe.pontos)
+            }));
             classificacao.sort((a, b) => b.total - a.total);
             return classificacao;
         }
 
         function renderizarTotalPeso(dados) {
-            const total = dados.reduce((acc, e) => acc + e.peso, 0);
+            const total = dados.reduce((acc, e) => acc + somarLista(e.peso), 0);
             document.getElementById('total-peso').textContent = formatarKg(total);
         }
 
